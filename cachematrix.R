@@ -13,7 +13,9 @@ makeCacheMatrix <- function(x = matrix()) {
   # get the value of the matrix
   get <- function() x
   # invert the matrix and store in cache
+
   setInverse <- function(inverse) cache <<- inverse
+
   # get the inverted matrix from cache
   getInverse <- function() cache
   
@@ -29,8 +31,10 @@ makeCacheMatrix <- function(x = matrix()) {
 # (and the matrix has not changed), then the cachesolve should retrieve the inverse from the cache.
 
 cacheSolve <- function(x, ...) {
+
   ## get the inverse of the matrix stored in cache
   cache <- x$getInverse()
+
   # return inverted matrix from cache if it exists
   # else create the matrix in working environment
   if (!is.null(cache)) {
@@ -43,20 +47,26 @@ cacheSolve <- function(x, ...) {
   matrix <- x$get()
   
   # make sure matrix is square and invertible
+
   # if not, handle exception
+
   tryCatch( {
     # set and return inverse of matrix
     cache <- solve(matrix, ...)
   },
   error = function(e) {
+    
+    message("Error:")
     message(e)
     
     return(NA)
   },
   finally = {
     # set inverted matrix in cache
+
     x$setInverse(cache)
   } )
   # return matrix
+
   return (cache)
 }
